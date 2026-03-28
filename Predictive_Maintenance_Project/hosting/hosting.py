@@ -32,7 +32,7 @@ except RepositoryNotFoundError:
     create_repo(
         repo_id=repo_id,
         repo_type=repo_type,
-        space_sdk="docker",   # Required for Streamlit apps
+        space_sdk="streamlit",   # Required for Streamlit apps
         private=False,           # Change to True if needed
         exist_ok=False
     )
