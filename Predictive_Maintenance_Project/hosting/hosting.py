@@ -13,17 +13,17 @@ if not token:
 
 api = HfApi(token=token)
 # Step 1: Force delete the broken Space
-try:
-    api.delete_repo(repo_id=repo_id, repo_type="space")
-    print("✅ Deleted broken Space")
-except Exception as e:
-    print(f"Delete skipped: {e}")
+
 # ----------------------------
 # Space Details
 # ----------------------------
 repo_id = "Shramik121/predictive-maintenance-app"
 repo_type = "space"
-
+try:
+    api.delete_repo(repo_id=repo_id, repo_type="space")
+    print("✅ Deleted broken Space")
+except Exception as e:
+    print(f"Delete skipped: {e}")
 # ----------------------------
 # Step 1: Create Space (if not exists)
 # ----------------------------
