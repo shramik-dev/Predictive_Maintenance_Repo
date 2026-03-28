@@ -2,7 +2,12 @@ import streamlit as st
 import pandas as pd
 from huggingface_hub import hf_hub_download
 import joblib
+import os
 
+# Important for Hugging Face Docker Spaces
+os.environ["STREAMLIT_SERVER_ADDRESS"] = "0.0.0.0"
+os.environ["STREAMLIT_SERVER_PORT"] = "7860"
+os.environ["STREAMLIT_SERVER_HEADLESS"] = "true"
 st.set_page_config(
     page_title="Predictive Maintenance",
     page_icon="-",
