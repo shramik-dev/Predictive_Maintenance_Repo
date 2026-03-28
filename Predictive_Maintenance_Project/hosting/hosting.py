@@ -19,7 +19,7 @@ except Exception:
 create_repo(
     repo_id=repo_id,
     repo_type="space",
-    space_sdk="streamlit",
+    space_sdk="docker",
     private=False,
     exist_ok=True,
     token=token
