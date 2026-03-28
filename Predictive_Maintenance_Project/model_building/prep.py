@@ -1,4 +1,3 @@
-
 # ----------------------------
 # Libraries
 # ----------------------------
@@ -13,17 +12,18 @@ from huggingface_hub import HfApi
 token = os.getenv("HF_TOKEN")
 
 if not token:
-    raise ValueError("Missing Hugging Face token. Please set HF_TOKEN.")
+    raise ValueError("Missing Hugging Face token.")
 
 api = HfApi(token=token)
 
 # ----------------------------
-# Load Dataset
+# Load Dataset FROM HF
 # ----------------------------
-data_path = "/content/Predictive_Maintenance_Project/data/engine_data.csv"
+data_path = "hf://datasets/Shramik121/engine-dataset/engine_data.csv"
 
 df = pd.read_csv(data_path)
-print("✅ Dataset loaded successfully.")
+
+print("✅ Dataset loaded from Hugging Face successfully.")
 print("Shape:", df.shape)
 
 # ----------------------------
@@ -31,7 +31,6 @@ print("Shape:", df.shape)
 # ----------------------------
 target = "Engine Condition"
 
-# Remove rows where target is missing
 df = df.dropna(subset=[target])
 
 # ----------------------------
@@ -46,14 +45,12 @@ numeric_features = [
     "Coolant temp"
 ]
 
-# No categorical features in this dataset
 X = df[numeric_features]
 y = df[target]
 
 # ----------------------------
 # Data Cleaning
 # ----------------------------
-# Fill missing numeric values with mean
 X = X.fillna(X.mean())
 
 # ----------------------------
@@ -68,14 +65,14 @@ print(f"Train Shape: {Xtrain.shape}")
 print(f"Test Shape: {Xtest.shape}")
 
 # ----------------------------
-# Save Locally
+# Save Locally (temporary)
 # ----------------------------
-os.makedirs("/content/Predictive_Maintenance_Project/data/processed", exist_ok=True)
+os.makedirs("processed", exist_ok=True)
 
-Xtrain_path = "/content/Predictive_Maintenance_Project/data/processed/Xtrain.csv"
-Xtest_path = "/content/Predictive_Maintenance_Project/data/processed/Xtest.csv"
-ytrain_path = "/content/Predictive_Maintenance_Project/data/processed/ytrain.csv"
-ytest_path = "/content/Predictive_Maintenance_Project/data/processed/ytest.csv"
+Xtrain_path = "processed/Xtrain.csv"
+Xtest_path = "processed/Xtest.csv"
+ytrain_path = "processed/ytrain.csv"
+ytest_path = "processed/ytest.csv"
 
 Xtrain.to_csv(Xtrain_path, index=False)
 Xtest.to_csv(Xtest_path, index=False)
@@ -85,18 +82,18 @@ ytest.to_csv(ytest_path, index=False)
 print("✅ Train/Test datasets saved locally.")
 
 # ----------------------------
-# Upload to Hugging Face
+# OPTIONAL: Upload splits to SAME dataset repo
 # ----------------------------
-repo_id = "Shramik121/predictive-maintenance-dataset"
+repo_id = "Shramik121/engine-dataset"
 
 files = [Xtrain_path, Xtest_path, ytrain_path, ytest_path]
 
 for file_path in files:
     api.upload_file(
         path_or_fileobj=file_path,
-        path_in_repo=os.path.basename(file_path),
+        path_in_repo=f"processed/{os.path.basename(file_path)}",
         repo_id=repo_id,
         repo_type="dataset",
     )
 
-print("🚀 All split files uploaded successfully to Hugging Face!")
+print("🚀 Processed files uploaded to Hugging Face (optional step).")
