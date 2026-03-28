@@ -22,8 +22,6 @@ api = HfApi(token=token)
 df = pd.read_csv("Predictive_Maintenance_Project/data/engine_data.csv")
 print("Dataset loaded successfully.")
 
-df = pd.read_csv(data_path)
-print("✅ Dataset loaded successfully.")
 
 print("✅ Dataset loaded from Hugging Face successfully.")
 print("Shape:", df.shape)
