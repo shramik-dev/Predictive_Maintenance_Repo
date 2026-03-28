@@ -21,7 +21,7 @@ except Exception as e:
 create_repo(
     repo_id=repo_id,
     repo_type="space",
-    space_sdk="streamlit",   # ← must be streamlit, not docker
+    space_sdk="docker",   # ← must be streamlit, not docker
     private=False,
     exist_ok=True,
     token=token
