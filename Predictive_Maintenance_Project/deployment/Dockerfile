@@ -1,51 +1,28 @@
-# ----------------------------
-# Base Image
-# ----------------------------
-FROM python:3.9-slim
+FROM python:3.10-slim
 
-# ----------------------------
-# Set Working Directory
-# ----------------------------
 WORKDIR /app
 
-# ----------------------------
-# Copy Requirements First (for caching)
-# ----------------------------
+# Copy requirements and install
 COPY requirements.txt .
-
-# ----------------------------
-# Install Dependencies
-# ----------------------------
 RUN pip install --no-cache-dir -r requirements.txt
 
-# ----------------------------
-# Create Non-root User
-# ----------------------------
-RUN useradd -m -u 1000 user
+# Copy your app code
+COPY . .
 
-# Switch to user
-USER user
+# Pre-download and cache the model during build
+RUN python -c "
+from huggingface_hub import hf_hub_download
+import joblib
+import os
+model_path = hf_hub_download(
+    repo_id='Shramik121/predictive-maintenance-model',
+    filename='best_predictive_maintenance_xgb.pkl',
+    repo_type='model'
+)
+print('Model downloaded to:', model_path)
+"
 
-# Set environment variables
-ENV HOME=/home/user \
-    PATH=/home/user/.local/bin:$PATH
-
-# ----------------------------
-# Set User Working Directory
-# ----------------------------
-WORKDIR $HOME/app
-
-# ----------------------------
-# Copy Project Files
-# ----------------------------
-COPY --chown=user . $HOME/app
-
-# ----------------------------
-# Expose Hugging Face Port
-# ----------------------------
+# Expose the correct port
 EXPOSE 7860
 
-# ----------------------------
-# Run Streamlit App
-# ----------------------------
-CMD ["streamlit", "run", "app.py", "--server.port=7860", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "app.py", "--server.address=0.0.0.0", "--server.port=7860"]
