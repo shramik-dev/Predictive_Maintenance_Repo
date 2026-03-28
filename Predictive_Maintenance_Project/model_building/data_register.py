@@ -1,20 +1,18 @@
-
-from huggingface_hub import HfApi, create_repo
-from huggingface_hub.utils import RepositoryNotFoundError
+from huggingface_hub import HfApi
 import os
 
 # -------------------------------
-# Hugging Face Token (from GitHub Secrets)
+# Hugging Face Token
 # -------------------------------
 token = os.getenv("HF_TOKEN")
 
 if not token:
-    raise ValueError("Missing Hugging Face token. Please set HF_TOKEN in GitHub Actions secrets.")
+    raise ValueError("Missing Hugging Face token.")
 
 # -------------------------------
-# Repository Configuration
+# Existing Dataset Repo
 # -------------------------------
-repo_id = "Shramik121/predictive-maintenance-dataset"
+repo_id = "Shramik121/engine-dataset"
 repo_type = "dataset"
 
 # -------------------------------
@@ -23,35 +21,15 @@ repo_type = "dataset"
 api = HfApi(token=token)
 
 # -------------------------------
-# Step 1: Check if dataset repo exists
+# Check if dataset exists
 # -------------------------------
 try:
-    api.repo_info(repo_id=repo_id, repo_type=repo_type)
-    print(f"Dataset repository '{repo_id}' already exists. Using it.")
+    info = api.repo_info(repo_id=repo_id, repo_type=repo_type)
+    print(f"✅ Dataset '{repo_id}' found and ready to use.")
+    print(f"Files in dataset: {[file.rfilename for file in info.siblings]}")
 
-except RepositoryNotFoundError:
-    print(f"Dataset repository '{repo_id}' not found. Creating new repository...")
-    
-    create_repo(
-        repo_id=repo_id,
-        repo_type=repo_type,
-        private=False
-    )
-    
-    print(f"Dataset repository '{repo_id}' created successfully.")
+except Exception as e:
+    print(f"❌ Error accessing dataset: {e}")
+    raise
 
-# -------------------------------
-# Step 2: Upload Dataset Folder
-# -------------------------------
-data_folder_path = "/content/Predictive_Maintenance_Project/data"
-
-if not os.path.exists(data_folder_path):
-    raise FileNotFoundError(f"Data folder not found at {data_folder_path}")
-
-api.upload_folder(
-    folder_path=data_folder_path,
-    repo_id=repo_id,
-    repo_type=repo_type
-)
-
-print("✅ Data successfully uploaded to Hugging Face Dataset Hub!")
+print("🚀 No upload needed. Using existing Hugging Face dataset.")
