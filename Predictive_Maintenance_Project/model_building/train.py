@@ -27,10 +27,10 @@ api = HfApi(token=token)
 # ----------------------------
 # Dataset paths (from HF)
 # ----------------------------
-Xtrain_path = "hf://datasets/Shramik121/predictive-maintenance-dataset/Xtrain.csv"
-Xtest_path = "hf://datasets/Shramik121/predictive-maintenance-dataset/Xtest.csv"
-ytrain_path = "hf://datasets/Shramik121/predictive-maintenance-dataset/ytrain.csv"
-ytest_path = "hf://datasets/Shramik121/predictive-maintenance-dataset/ytest.csv"
+Xtrain_path = "hf://datasets/Shramik121/predictive-maintenance-dataset/processed/Xtrain.csv"
+Xtest_path  = "hf://datasets/Shramik121/predictive-maintenance-dataset/processed/Xtest.csv"
+ytrain_path = "hf://datasets/Shramik121/predictive-maintenance-dataset/processed/ytrain.csv"
+ytest_path  = "hf://datasets/Shramik121/predictive-maintenance-dataset/processed/ytest.csv"
 
 # ----------------------------
 # Load data
