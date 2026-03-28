@@ -84,7 +84,7 @@ print("✅ Train/Test datasets saved locally.")
 # ----------------------------
 # OPTIONAL: Upload splits to SAME dataset repo
 # ----------------------------
-repo_id = "SShramik121/predictive-maintenance-dataset"
+repo_id = "Shramik121/predictive-maintenance-dataset"
 
 files = [Xtrain_path, Xtest_path, ytrain_path, ytest_path]
 
