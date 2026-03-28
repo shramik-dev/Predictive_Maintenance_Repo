@@ -19,15 +19,11 @@ api = HfApi(token=token)
 # ----------------------------
 # Load Dataset FROM HF
 # ----------------------------
-data_path = "https://huggingface.co/datasets/Shramik121/engine-dataset"
+Superkart_df = pd.read_csv("Predictive_Maintenance_Project/data/engine_data.csv")
+print("Dataset loaded successfully.")
 
-df = pd.read_csv(
-    data_path,
-    sep=None,                # auto-detect delimiter
-    engine='python',         # more flexible parser
-    on_bad_lines='skip',     # skip corrupted rows
-    quoting=3                # ignore quotes completely
-)
+df = pd.read_csv(data_path)
+print("✅ Dataset loaded successfully.")
 
 print("✅ Dataset loaded from Hugging Face successfully.")
 print("Shape:", df.shape)
