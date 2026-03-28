@@ -24,12 +24,15 @@ api = HfApi(token=token)
 # Check if dataset exists
 # -------------------------------
 try:
-    info = api.repo_info(repo_id=repo_id, repo_type=repo_type)
-    print(f"✅ Dataset '{repo_id}' found and ready to use.")
-    print(f"Files in dataset: {[file.rfilename for file in info.siblings]}")
+    api.repo_info(repo_id=repo_id, repo_type=repo_type)
+    print(f"Space '{repo_id}' already exists. Using it.")
+except RepositoryNotFoundError:
+    print(f"Space '{repo_id}' not found. Creating new space...")
+    create_repo(repo_id=repo_id, repo_type=repo_type, private=False)
+    print(f"Space '{repo_id}' created.")
 
-except Exception as e:
-    print(f"❌ Error accessing dataset: {e}")
-    raise
-
-print("🚀 No upload needed. Using existing Hugging Face dataset.")
+api.upload_folder(
+    folder_path="SuperKart_project/data",
+    repo_id=repo_id,
+    repo_type=repo_type,
+)
