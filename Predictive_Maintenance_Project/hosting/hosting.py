@@ -12,7 +12,12 @@ if not token:
     raise ValueError(" Hugging Face token not found. Please set HF_TOKEN.")
 
 api = HfApi(token=token)
-
+# Step 1: Force delete the broken Space
+try:
+    api.delete_repo(repo_id=repo_id, repo_type="space")
+    print("✅ Deleted broken Space")
+except Exception as e:
+    print(f"Delete skipped: {e}")
 # ----------------------------
 # Space Details
 # ----------------------------
