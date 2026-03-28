@@ -1,68 +1,65 @@
-
 from huggingface_hub import HfApi, create_repo
 from huggingface_hub.utils import RepositoryNotFoundError
 import os
 
-# ----------------------------
 # Initialize API
-# ----------------------------
 token = os.getenv("HF_TOKEN")
-
 if not token:
-    raise ValueError(" Hugging Face token not found. Please set HF_TOKEN.")
+    raise ValueError("❌ HF_TOKEN not found.")
 
 api = HfApi(token=token)
-# Step 1: Force delete the broken Space
-
-# ----------------------------
-# Space Details
-# ----------------------------
 repo_id = "Shramik121/predictive-maintenance-app"
-repo_type = "space"
+
+# Step 1: Delete broken Space
 try:
-    api.delete_repo(repo_id=repo_id, repo_type="space")
+    api.delete_repo(repo_id=repo_id, repo_type="space", token=token)
     print("✅ Deleted broken Space")
 except Exception as e:
     print(f"Delete skipped: {e}")
-# ----------------------------
-# Step 1: Create Space (if not exists)
-# ----------------------------
-try:
-    api.repo_info(repo_id=repo_id, repo_type=repo_type)
-    print(f" Space '{repo_id}' already exists.")
 
-except RepositoryNotFoundError:
-    print(f"🚀 Creating Space '{repo_id}'...")
+# Step 2: Create Space fresh
+create_repo(
+    repo_id=repo_id,
+    repo_type="space",
+    space_sdk="streamlit",   # ← must be streamlit, not docker
+    private=False,
+    exist_ok=True,
+    token=token
+)
+print("✅ Space created")
 
-    create_repo(
-        repo_id=repo_id,
-        repo_type=repo_type,
-        space_sdk="docker",   # Required for Streamlit apps
-        private=False,           # Change to True if needed
-        exist_ok=False
-    )
+# Step 3: Upload README.md FIRST (mandatory)
+readme_content = b"""---
+title: Predictive Maintenance App
+emoji: \xf0\x9f\x94\xa7
+colorFrom: blue
+colorTo: green
+sdk: streamlit
+sdk_version: 1.30.0
+app_file: app.py
+pinned: false
+---
+"""
+api.upload_file(
+    path_or_fileobj=readme_content,
+    path_in_repo="README.md",
+    repo_id=repo_id,
+    repo_type="space",
+    commit_message="Add README metadata",
+    token=token
+)
+print("✅ README uploaded")
 
-    print(f" Space created successfully!")
-    print(f" Wait 1-2 minutes for initialization:")
-    print(f"https://huggingface.co/spaces/{repo_id}")
-
-except Exception as e:
-    print(f" Error while creating Space: {e}")
-    raise
-
-# ----------------------------
-# Step 2: Upload Deployment Files
-# ----------------------------
+# Step 4: Upload deployment files
 api.upload_folder(
     folder_path="Predictive_Maintenance_Project/deployment",
     repo_id=repo_id,
-    repo_type=repo_type,
-    path_in_repo="",   # Upload to root
-    commit_message="🚀 Deploy Predictive Maintenance Streamlit App"
+    repo_type="space",
+    path_in_repo="",
+    commit_message="🚀 Deploy Predictive Maintenance Streamlit App",
+    token=token
 )
 
-print("\n Upload complete!")
+print("\n✅ Upload complete!")
 print("⏳ App will build in 2–5 minutes.")
-
-print(f"\n🌐 Visit your app here:")
-print(f"https://huggingface.co/spaces/{repo_id}")
+print(f"\n🌐 https://huggingface.co/spaces/{repo_id}")
