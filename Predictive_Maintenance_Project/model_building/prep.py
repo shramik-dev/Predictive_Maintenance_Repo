@@ -21,7 +21,13 @@ api = HfApi(token=token)
 # ----------------------------
 data_path = "https://huggingface.co/datasets/Shramik121/engine-dataset"
 
-df = pd.read_csv(data_path, sep=None, engine='python')
+df = pd.read_csv(
+    data_path,
+    sep=None,                # auto-detect delimiter
+    engine='python',         # more flexible parser
+    on_bad_lines='skip',     # skip corrupted rows
+    quoting=3                # ignore quotes completely
+)
 
 print("✅ Dataset loaded from Hugging Face successfully.")
 print("Shape:", df.shape)
