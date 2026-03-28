@@ -5,7 +5,7 @@ import joblib
 
 st.set_page_config(
     page_title="Predictive Maintenance",
-    page_icon="🔧",
+    page_icon="-",
     layout="centered"
 )
 
@@ -20,10 +20,10 @@ def load_model():
 
 model = load_model()
 
-st.title("🔧 Predictive Maintenance System")
+st.title(" Predictive Maintenance System")
 st.write("Predict Engine Condition (Healthy / Faulty)")
 
-st.subheader("🔹 Single Prediction")
+st.subheader(" Single Prediction")
 engine_rpm = st.number_input("Engine RPM", value=1500)
 lub_oil_pressure = st.number_input("Lub Oil Pressure", value=3.5)
 fuel_pressure = st.number_input("Fuel Pressure", value=5.0)
@@ -45,13 +45,13 @@ if st.button("🔍 Predict Single"):
         pred = model.predict(input_df)[0]
         label_map = {0: "Healthy", 1: "Faulty"}
         if pred == 1:
-            st.error(f"⚠️ {label_map[pred]} Engine")
+            st.error(f" {label_map[pred]} Engine")
         else:
-            st.success(f"✅ {label_map[pred]} Engine")
+            st.success(f" {label_map[pred]} Engine")
     except Exception as e:
         st.error(f"Prediction Error: {e}")
 
-st.subheader("📂 Bulk Prediction (Upload CSV)")
+st.subheader(" Bulk Prediction (Upload CSV)")
 uploaded_file = st.file_uploader("Upload CSV file", type=["csv"])
 
 required_cols = [
@@ -62,24 +62,24 @@ required_cols = [
 if uploaded_file is not None:
     try:
         data = pd.read_csv(uploaded_file)
-        st.write("### 📊 Uploaded Data Preview")
+        st.write("###  Uploaded Data Preview")
         st.dataframe(data.head())
         if not all(col in data.columns for col in required_cols):
-            st.error("❌ Invalid CSV format")
+            st.error(" Invalid CSV format")
             st.info(f"Required columns: {required_cols}")
         else:
             predictions = model.predict(data)
             label_map = {0: "Healthy", 1: "Faulty"}
             data["Prediction"] = [label_map[p] for p in predictions]
-            st.write("### ✅ Predictions")
+            st.write("###  Predictions")
             st.dataframe(data)
             csv = data.to_csv(index=False).encode('utf-8')
             st.download_button(
-                label="📥 Download Results",
+                label=" Download Results",
                 data=csv,
                 file_name="predictions.csv",
                 mime="text/csv"
             )
     except Exception as e:
         st.error(f"Error processing file: {e}")
-        st.warning("⚠️ Please upload a valid CSV file.")
+        st.warning(" Please upload a valid CSV file.")
