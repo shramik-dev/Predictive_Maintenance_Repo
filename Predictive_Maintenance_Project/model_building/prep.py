@@ -19,7 +19,7 @@ api = HfApi(token=token)
 # ----------------------------
 # Load Dataset FROM HF
 # ----------------------------
-data_path = "https://huggingface.co/datasets/Shramik121/engine-dataset/resolve/main/engine_data.csv"
+data_path = "https://huggingface.co/datasets/Shramik121/engine-dataset"
 
 df = pd.read_csv(data_path)
 
