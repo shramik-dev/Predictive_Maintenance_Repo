@@ -19,7 +19,7 @@ api = HfApi(token=token)
 # ----------------------------
 # Load Dataset FROM HF
 # ----------------------------
-df =  = pd.read_csv("Predictive_Maintenance_Project/data/engine_data.csv")
+df = pd.read_csv("Predictive_Maintenance_Project/data/engine_data.csv")
 print("Dataset loaded successfully.")
 
 df = pd.read_csv(data_path)
