@@ -14,5 +14,5 @@ ENV HOME=/home/user \
 WORKDIR $HOME/app
 
 COPY --chown=user . $HOME/app
-CMD ["sleep", "infinity"]
-#CMD ["streamlit", "run", "app.py", "--server.port=7860", "--server.address=0.0.0.0", "--server.enableXsrfProtection=false"]
+#CMD ["sleep", "infinity"]
+CMD ["streamlit", "run", "app.py", "--server.port=7860", "--server.address=0.0.0.0", "--server.enableXsrfProtection=false"]
