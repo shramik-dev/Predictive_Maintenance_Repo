@@ -3,33 +3,27 @@ import os
 
 token = os.getenv("HF_TOKEN")
 if not token:
-    raise ValueError(" HF_TOKEN not found.")
+    raise ValueError("❌ HF_TOKEN not found.")
 
 api = HfApi(token=token)
 repo_id = "1samjack1/predictive-maintenance-app"
 
-# Step 1: Delete old Space
-try:
-    api.delete_repo(repo_id=repo_id, repo_type="space", token=token)
-    print(" Deleted old Space")
-except Exception:
-    print(" No existing Space to delete")
-
-# Step 2: Create fresh Space
+# Never delete — just create if not exists
 create_repo(
     repo_id=repo_id,
     repo_type="space",
-    space_sdk="streamlit",
+    space_sdk="docker",
     private=False,
     exist_ok=True,
     token=token
 )
-print(" Space created")
+print("✅ Space ready")
 
-# Step 3: Upload README first
+# Upload README
 api.upload_file(
     path_or_fileobj="""---
 title: Predictive Maintenance App
+emoji: 🔧
 colorFrom: blue
 colorTo: green
 sdk: docker
@@ -43,17 +37,17 @@ pinned: false
     commit_message="Add README",
     token=token
 )
-print(" README uploaded")
+print("✅ README uploaded")
 
-# Step 4: Upload deployment files
+# Upload deployment files — overwrites existing files automatically
 api.upload_folder(
     folder_path="Predictive_Maintenance_Project/deployment",
     repo_id=repo_id,
     repo_type="space",
     path_in_repo="",
-    commit_message=" Deploy Predictive Maintenance App",
+    commit_message="🚀 Deploy app",
     token=token
 )
 
-print(" Upload complete! App will build in 2-5 min.")
-print(f" https://huggingface.co/spaces/{repo_id}")
+print("✅ Done!")
+print(f"🌐 https://huggingface.co/spaces/{repo_id}")
