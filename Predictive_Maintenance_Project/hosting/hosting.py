@@ -1,7 +1,7 @@
 from huggingface_hub import HfApi, create_repo
 import os
 
-token = os.getenv("HF_TOKEN1")
+token = os.getenv("HF_TOKEN")
 if not token:
     raise ValueError(" HF_TOKEN not found.")
 
