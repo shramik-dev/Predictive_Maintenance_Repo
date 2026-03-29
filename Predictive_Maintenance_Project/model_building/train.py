@@ -17,7 +17,7 @@ mlflow.set_experiment("Predictive-Maintenance-XGBoost")
 # ----------------------------
 # Hugging Face setup
 # ----------------------------
-token = os.getenv("HF_TOKEN")
+token = os.getenv("HF_TOKEN1")
 
 if not token:
     raise ValueError("Missing Hugging Face token.")
@@ -27,10 +27,10 @@ api = HfApi(token=token)
 # ----------------------------
 # Dataset paths (from HF)
 # ----------------------------
-Xtrain_path = "hf://datasets/Shramik121/predictive-maintenance-dataset/processed/Xtrain.csv"
-Xtest_path  = "hf://datasets/Shramik121/predictive-maintenance-dataset/processed/Xtest.csv"
-ytrain_path = "hf://datasets/Shramik121/predictive-maintenance-dataset/processed/ytrain.csv"
-ytest_path  = "hf://datasets/Shramik121/predictive-maintenance-dataset/processed/ytest.csv"
+Xtrain_path = "hf://datasets/1samjack1/predictive-maintenance-dataset/processed/Xtrain.csv"
+Xtest_path  = "hf://datasets/1samjack1/predictive-maintenance-dataset/processed/Xtest.csv"
+ytrain_path = "hf://datasets/1samjack1/predictive-maintenance-dataset/processed/ytrain.csv"
+ytest_path  = "hf://datasets/1samjack1/predictive-maintenance-dataset/processed/ytest.csv"
 
 # ----------------------------
 # Load data
@@ -116,7 +116,7 @@ mlflow.log_artifact(model_path, artifact_path="model")
 # ----------------------------
 # Upload to Hugging Face Model Hub
 # ----------------------------
-repo_id = "Shramik121/predictive-maintenance-model"
+repo_id = "1samjack1/predictive-maintenance-model"
 repo_type = "model"
 
 try:
