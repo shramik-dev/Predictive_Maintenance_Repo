@@ -9,7 +9,7 @@ model_path = hf_hub_download(
     repo_id="1samjack1/predictive-maintenance-model",
     filename="best_predictive_maintenance_xgb.pkl",
     repo_type="model",
-    token=os.getenv("HF_TOKEN1")
+    token=os.getenv("HF_TOKEN")
 )
 model = joblib.load(model_path)
 
