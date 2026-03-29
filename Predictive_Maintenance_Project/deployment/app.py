@@ -7,7 +7,7 @@ import os
 # Download model
 model_path = hf_hub_download(
     repo_id="Shramik121/predictive-maintenance-model",
-    filename="best_predictive_maintenance_xgb.pkl",
+    filename="best_predictive_maintenance_xgb.joblib",
     repo_type="model",
     token=os.getenv("HF_TOKEN")
 )
