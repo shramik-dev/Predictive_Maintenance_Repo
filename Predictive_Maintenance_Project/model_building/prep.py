@@ -9,7 +9,7 @@ from huggingface_hub import HfApi
 # ----------------------------
 # Setup Hugging Face API
 # ----------------------------
-token = os.getenv("HF_TOKEN1")
+token = os.getenv("HF_TOKEN")
 
 if not token:
     raise ValueError("Missing Hugging Face token.")
