@@ -9,7 +9,7 @@ from huggingface_hub import HfApi
 # ----------------------------
 # Setup Hugging Face API
 # ----------------------------
-token = os.getenv("HF_TOKEN")
+token = os.getenv("HF_TOKEN1")
 
 if not token:
     raise ValueError("Missing Hugging Face token.")
@@ -84,7 +84,7 @@ print("✅ Train/Test datasets saved locally.")
 # ----------------------------
 # OPTIONAL: Upload splits to SAME dataset repo
 # ----------------------------
-repo_id = "Shramik121/predictive-maintenance-dataset"
+repo_id = "1samjack1/predictive-maintenance-dataset"
 
 files = [Xtrain_path, Xtest_path, ytrain_path, ytest_path]
 
