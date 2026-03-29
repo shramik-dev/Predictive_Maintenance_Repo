@@ -1,4 +1,3 @@
-
 import pandas as pd
 import numpy as np
 from xgboost import XGBClassifier
@@ -17,7 +16,7 @@ mlflow.set_experiment("Predictive-Maintenance-XGBoost")
 # ----------------------------
 # Hugging Face setup
 # ----------------------------
-token = os.getenv("HF_TOKEN1")
+token = os.getenv("HF_TOKEN")
 
 if not token:
     raise ValueError("Missing Hugging Face token.")
