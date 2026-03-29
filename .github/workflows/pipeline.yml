@@ -1,7 +1,7 @@
 name: Predictive Maintenance Pipeline
 
 on:
-  push:
+  p:
     branches:
       - main   # Trigger on push to main branch
 
