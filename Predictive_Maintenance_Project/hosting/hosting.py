@@ -1,12 +1,12 @@
 from huggingface_hub import HfApi, create_repo
 import os
 
-token = os.getenv("HF_TOKEN")
+token = os.getenv("HF_TOKEN1")
 if not token:
     raise ValueError(" HF_TOKEN not found.")
 
 api = HfApi(token=token)
-repo_id = "Shramik121/predictive-maintenance-app"
+repo_id = "1samjack1/predictive-maintenance-app"
 
 # Step 1: Delete old Space
 try:
