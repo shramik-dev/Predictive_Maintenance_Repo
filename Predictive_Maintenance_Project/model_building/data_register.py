@@ -4,7 +4,7 @@ import os
 # -------------------------------
 # Hugging Face Token
 # -------------------------------
-token = os.getenv("HF_TOKEN1")
+token = os.getenv("HF_TOKEN")
 
 if not token:
     raise ValueError("Missing Hugging Face token.")
