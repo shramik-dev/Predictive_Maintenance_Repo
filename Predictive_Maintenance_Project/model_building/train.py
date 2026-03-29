@@ -103,7 +103,7 @@ print(classification_report(ytest, y_pred_best))
 # ----------------------------
 # Save Model
 # ----------------------------
-model_path = "best_predictive_maintenance_xgb.pkl"
+model_path = "best_predictive_maintenance_xgb.joblib"
 joblib.dump(best_model, model_path)
 
 print(f"✅ Model saved locally: {model_path}")
